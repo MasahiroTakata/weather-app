@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from "styled-components";
 import { Weather } from './Weather'; // 自分で作ったコンポーネントは{}が必要かも？
 
 export const App = () => {
@@ -26,10 +27,19 @@ export const App = () => {
     <div>
       <h1>Weather App</h1>
       <form onSubmit={handleFormSubmit}>
-        <input type="text" value={city} onChange={handleInputChange} />
-        <button type="submit">Get Weather</button>
+        <CityText type="text" value={city} onChange={handleInputChange}/>
+        <SButton type="submit">天気を表示</SButton>
       </form>
       {weatherData && <Weather data={weatherData} />}
     </div>
   );
 };
+
+const SButton = styled.button`
+  margin-left: 16px;
+`;
+
+const CityText = styled.input`
+  width: 200px;
+  height: 20px;
+`;
