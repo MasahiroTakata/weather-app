@@ -5,31 +5,36 @@ import { Weather } from './Weather'; // 自分で作ったコンポーネント�
 export const App = () => {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e) => {
     setCity(e.target.value);
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const apiKey = process.env.REACT_APP_API_KEY;
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      setWeatherData(data);
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
+  const handleButtonClick = async (e) => {
+    if (city.trim() === '') {
+      setErrorMessage('テキストを入力してください。');
+      setWeatherData('');
+    } else {
+      setErrorMessage('');
+      try {
+        const apiKey = process.env.REACT_APP_API_KEY;
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        setWeatherData(data);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
     }
   };
 
   return (
     <div>
       <h1>Weather App</h1>
-      <form onSubmit={handleFormSubmit}>
         <CityText type="text" value={city} onChange={handleInputChange}/>
-        <SButton type="submit">天気を表示</SButton>
-      </form>
+        <SButton onClick={handleButtonClick}>天気を表示</SButton>
+      {errorMessage && <p>{errorMessage}</p>}
       {weatherData && <Weather data={weatherData} />}
     </div>
   );
