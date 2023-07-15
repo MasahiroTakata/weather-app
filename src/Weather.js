@@ -9,8 +9,8 @@ export const Weather = ({ data }) => {
   return (
     <div>
       <h2>{name}</h2>
-      <p>Weather: {weather[0].description}</p>
-      <p>Temperature: {temperature}°C</p>
+      <p>天気: {weather[0].description}</p>
+      <p>気温: {temperature}°C</p>
     </div>
   );
 };

@@ -19,7 +19,7 @@ export const App = () => {
       setErrorMessage('');
       try {
         const apiKey = process.env.REACT_APP_API_KEY;
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=ja`;
         const response = await fetch(apiUrl);
         const data = await response.json();
         setWeatherData(data);
@@ -33,7 +33,7 @@ export const App = () => {
     <div>
       <h1>Weather App</h1>
         <CityText type="text" value={city} onChange={handleInputChange}/>
-        <SButton onClick={handleButtonClick}>天気を表示</SButton>
+        <SButton onClick={handleButtonClick}>天気を表示</SButton><br/>
         {errorMessage && <p>{errorMessage}</p>}
         {weatherData && <Weather data={weatherData} />}
     </div>
